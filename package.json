@@ -8,7 +8,23 @@
         "test": "jest",
         "build": "tsc --project tsconfig.json",
         "format": "prettier --write \"src/**/*.ts\" \"__tests__/**/*.ts\"",
-        "lint": "eslint \"src/**\""
+        "lint": "eslint \"src/**\"",
+        "prepare": "npm run build",
+        "prepublishOnly": "npm test && npm run lint",
+        "preversion": "npm run lint",
+        "version": "npm run format && git add -A src",
+        "postversion": "git push && git push --tags"
+     },
+    "author": "filcp",
+    "keywords": ["serverless", "plugin", "openapi", "schema", "json", "json-schema", "jsonref"],
+    "license": "ISC",
+    "homepage": "https://github.com/filcp/serverless-openapi-to-json-schema#readme",
+    "bugs": {
+        "url": "https://github.com/filcp/serverless-openapi-to-json-schema/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/caki0915/my-awesome-greeter.git"
     },
     "dependencies": {
         "@apidevtools/json-schema-ref-parser": "^9.0.9",
@@ -30,5 +46,6 @@
         "serverless": "^2.52.0",
         "ts-jest": "^27.0.4",
         "typescript": "^4.3.5"
-    }
+    },
+    "files": ["lib/**/*"]
 }
