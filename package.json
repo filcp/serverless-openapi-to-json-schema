@@ -24,7 +24,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/caki0915/my-awesome-greeter.git"
+        "url": "git+https://github.com/filcp/serverless-openapi-to-json-schema.git"
     },
     "dependencies": {
         "@apidevtools/json-schema-ref-parser": "^9.0.9",
