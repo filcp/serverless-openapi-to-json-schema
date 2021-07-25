@@ -1,0 +1,19 @@
+type: object
+properties:
+  firstName:
+    type: string
+    description: The first name
+    example: Jhon
+  middleName:
+    type: string
+    description: The middle name
+    example: Jhonny
+    nullable: true
+  lastName:
+    type: string
+    description: The last name
+    example: Doe
+  birthDate:
+    type: string
+    example: "1990-12-02"
+    format: date

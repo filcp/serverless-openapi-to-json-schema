@@ -1,0 +1,5 @@
+type: object
+properties:
+  person:
+    $ref: person.yml
+  
