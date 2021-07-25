@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "allowJs": false,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+
+        "strict": true,
+        "strictPropertyInitialization": false,
+        "noImplicitAny": true,
+        "removeComments": true,
+
+        "target": "es2018",
+        "rootDir": "src",
+        "outDir": "lib",
+
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+    },
+    "include": ["src/**/*.ts", "__tests__/**/*.ts"],
+    "exclude": ["__tests__/**/*.ts"]
+}
