@@ -6,13 +6,13 @@ type FunctionEvent = {
     http: {
         path: string;
         schemaPath?: string;
-        request?: any;
+        request?: unknown;
     };
 };
 
 class OpenApiToJsonSchemaPlugin {
     public serverless: Serverless;
-    public hooks: any;
+    public hooks: { [key: string]: unknown };
     private functionsNames: string[];
 
     constructor(serverless: Serverless) {
@@ -31,18 +31,10 @@ class OpenApiToJsonSchemaPlugin {
 
     public async beforeDeploy(): Promise<void> {
         await Promise.all(
-            this.functionsNames.map(async (functionName: any): Promise<void> => {
+            this.functionsNames.map(async (functionName: string): Promise<void> => {
                 await Promise.all(await this.addSchemas(functionName));
             }),
         );
-    }
-
-    private async resolveSchemaRefs(schemaPath: string): Promise<JSONSchema> {
-        return $RefParser.dereference(schemaPath);
-    }
-
-    private convertOpenApiToJsonSchema(openApiSchema: JSONSchema): JSONSchema {
-        return toJsonSchema(openApiSchema);
     }
 
     private async addSchemas(functionName: string): Promise<Serverless.Event[]> {
@@ -57,8 +49,8 @@ class OpenApiToJsonSchemaPlugin {
 
                 this.serverless.cli.log(`Converting schema for ${path}`);
 
-                const resolvedSchema = await this.resolveSchemaRefs(schemaPath);
-                const jsonSchema = this.convertOpenApiToJsonSchema(resolvedSchema);
+                const resolvedOpenApiSchema = await this.resolveSchemaRefs(schemaPath);
+                const jsonSchema = this.convertOpenApiToJsonSchema(resolvedOpenApiSchema);
 
                 event.http.request = { schema: { "application/json": jsonSchema } };
             } catch (error) {
@@ -66,6 +58,14 @@ class OpenApiToJsonSchemaPlugin {
                 throw error;
             }
         });
+    }
+
+    private async resolveSchemaRefs(schemaPath: string): Promise<JSONSchema> {
+        return $RefParser.dereference(schemaPath);
+    }
+
+    private convertOpenApiToJsonSchema(openApiSchema: JSONSchema): JSONSchema {
+        return toJsonSchema(openApiSchema);
     }
 }
 
